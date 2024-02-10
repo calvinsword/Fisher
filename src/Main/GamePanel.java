@@ -1,5 +1,6 @@
 package Main;
 
+import Tile.Tilemanager;
 import entity.Player;
 
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     int FPS = 60;
 
+    Tilemanager tileM = new Tilemanager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this,keyH);
