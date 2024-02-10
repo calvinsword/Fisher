@@ -15,6 +15,10 @@ public class GamePanel extends JPanel implements Runnable{
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
 
+    //FPS
+    int FPS = 60;
+
+
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
@@ -26,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
-        this.setBackground(Color.blue);
+        this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -39,28 +43,48 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
+        // FPS LIMITER
+        double drawInterval = 1000000000/FPS;
+        double nextDrawTime = System.nanoTime() + drawInterval;
 
         while(gameThread != null) {
 
-            // 1 UPDATE: update information such as character positions
             update();
-            // 2 DRAW: draw the screen with the updated information
+
             repaint();
+
+            // FPS LIMITER
+            try {
+                double remainingTime = nextDrawTime- System.nanoTime();
+                //nanoseconds to milliseconds
+                remainingTime = remainingTime/1000000;
+
+                if (remainingTime < 0){
+                    remainingTime = 0;
+                }
+
+                Thread.sleep((long) remainingTime);
+
+                nextDrawTime += drawInterval;
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
     public void update()  {
         // MOVE KEYS
-        if (keyH.upPressed = true) {
+        if (keyH.upPressed == true) {
             playerY -= playerSpeed;
         }
-        else if(keyH.downPressed = true){
+        else if(keyH.downPressed == true){
             playerY += playerSpeed;
         }
-        else if(keyH.leftPressed = true){
+        else if(keyH.leftPressed == true){
             playerX -= playerSpeed;
         }
-        else if(keyH.rightPressed = true){
+        else if(keyH.rightPressed == true){
             playerX += playerSpeed;
         }
 
