@@ -20,16 +20,35 @@ public class GamePanel extends JPanel implements Runnable{
 
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
-        this.setBackground(Color.blue);
+        this.setBackground(Color.green);
         this.setDoubleBuffered(true);
     }
 
     public void startGameThread() {
         gameThread = new Thread(this);
+        gameThread.start();
     }
 
     @Override
     public void run() {
+
+        while(gameThread != null) {
+
+
+            // System.out.println("The game loop is running");
+
+            // 1 UPDATE: update information such as character positions
+
+            // 2 DRAW: draw the screen with the updated information
+        }
+
+    }
+    public void update()  {
+
+    }
+    public void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
 
     }
 }
