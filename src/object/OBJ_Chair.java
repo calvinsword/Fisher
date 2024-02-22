@@ -12,5 +12,6 @@ public class OBJ_Chair extends SuperObject{
         }catch (IOException e) {
             e.printStackTrace();
         }
+        collision = true;
     }
 }

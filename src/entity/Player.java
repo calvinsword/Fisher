@@ -27,6 +27,8 @@ public class Player extends Entity{
         solidArea = new Rectangle();
         solidArea.x = 8;
         solidArea.y = 16;
+        solidAreaDefualtX = solidArea.x;
+        solidAreaDefualtY = solidArea.y;
         solidArea.width = 32;
         solidArea.height = 32;
 
@@ -92,6 +94,10 @@ public class Player extends Entity{
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+            //CHECK OBJECT COLLISION
+            int objIndex = gp.cChecker.checkObject(this, true);
+            Fish(objIndex);
+
             //SPRINT MECANIC
             if (sprint == true){
                 speed = 8;
@@ -123,6 +129,15 @@ public class Player extends Entity{
         }
 
     }
+
+    public void Fish(int i) {
+
+        if(i != 999) {
+            //TODO: MAKE IT SO HE SITS ON THE CHAIR AND AN ANIMATION PLAYS WHERE HE FISHES
+            //TODO: GIVE FISH EVERY 10 SECONDS
+        }
+    }
+
     public void draw(Graphics2D g2){
 //        g2.setColor(Color.white);
 //        g2.fillRect(x, y, gp.tileSize, gp.tileSize);
