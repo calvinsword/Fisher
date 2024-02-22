@@ -11,7 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity{
-    boolean sprint, buttonAnimator,action,inAction;
+    boolean sprint, buttonAnimator,action,fishing;
+    int fishGetter,fish;
     GamePanel gp;
     KeyHandler keyH;
 
@@ -65,6 +66,7 @@ public class Player extends Entity{
     }
 
     public void update(){
+        System.out.println(fish);
         //OBJECT ANIMATOR
         objectAnimations++;
         if (objectAnimations > 30) {
@@ -76,7 +78,7 @@ public class Player extends Entity{
             }
             objectAnimations = 0;
         }
-        //CHAIR ANIMATOR
+        //BUTTON ANIMATOR
         if (buttonAnimator == true) {
             if (action == false){
                 if (objectAnimator == 1) {
@@ -91,6 +93,33 @@ public class Player extends Entity{
                     gp.obj[2].worldY = 36 * gp.tileSize;
                     gp.obj[1] = null;
                 }
+            }
+        }
+        //FISH GIVER
+        if(fishing == true){
+            gp.obj[1] = null;
+            gp.obj[2] = null;
+            if (objectAnimations > 29){
+                fishGetter++;
+            }
+            if (fishGetter > 10){
+                fish++;
+                fishGetter = 0;
+            }
+            //EXIT FISHING
+            if (objectAnimations == 25 && keyH.actionPressed == true){
+                if (keyH.leftPressed){
+                    worldX = 30 * gp.tileSize;
+                }
+                else if(keyH.rightPressed || keyH.downPressed){
+                    worldX = 32 * gp.tileSize;
+                }
+                else if (keyH.upPressed) {
+                    worldY = 37 * gp.tileSize;
+                }
+                else worldX = 32 * gp.tileSize;
+                fishing = false;
+                action = false;
             }
         }
         //MOVEMENT
@@ -177,15 +206,12 @@ public class Player extends Entity{
                     buttonAnimator = true;
                     // IF E IS PRESSED IT WILL DELETE THE BUTTONINDICATOR
                     if(action == true) {
-                        gp.obj[1] = null;
-                        gp.obj[2] = null;
                         worldX = 31 * gp.tileSize;
                         worldY = 37 * gp.tileSize;
-                        inAction = true;
+                        fishing = true;
                     }
                     break;
             }
-            //TODO: GIVE FISH EVERY 10 SECONDS
         }
         else if (i == 999){
             //RESETS THE BUTTON ANIMATION
