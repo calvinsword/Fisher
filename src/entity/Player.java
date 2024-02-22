@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity{
-
+    boolean sprint;
     GamePanel gp;
     KeyHandler keyH;
 
@@ -64,6 +64,13 @@ public class Player extends Entity{
 
         if(keyH.upPressed == true || keyH.downPressed == true ||
                 keyH.leftPressed == true || keyH.rightPressed == true){
+            // SPRINT
+            if (keyH.shiftPressed == true) {
+                sprint = true;
+                spriteCounter++;
+            } else sprint = false;
+
+
             // MOVE KEYS
             if (keyH.upPressed == true) {
                 direction = "back";
@@ -85,6 +92,12 @@ public class Player extends Entity{
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+            //SPRINT MECANIC
+            if (sprint == true){
+                speed = 8;
+            }
+            else speed = 4;
+
             // IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false) {
 
@@ -101,6 +114,7 @@ public class Player extends Entity{
                 if (spriteNumber == 1) {
                     spriteNumber = 2;
                 }
+
                 else if(spriteNumber == 2) {
                     spriteNumber = 1;
                 }

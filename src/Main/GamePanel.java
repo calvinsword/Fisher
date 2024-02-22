@@ -39,13 +39,6 @@ public class GamePanel extends JPanel implements Runnable{
     // SUPER OBJECT [10] MEANS THAT YOU CAN PLACE 10 OBJECTS IN THE SCREEN
     public SuperObject obj[] = new SuperObject[10];
 
-
-    // Set players default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
-
-
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth,screenHeight));
         this.setBackground(Color.black);
