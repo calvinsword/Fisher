@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends Entity{
-    boolean sprint,action,inAction;
+    boolean sprint, buttonAnimator,action,inAction;
     GamePanel gp;
     KeyHandler keyH;
 
@@ -65,8 +65,34 @@ public class Player extends Entity{
     }
 
     public void update(){
-        //INACTION ANIMATOR
-
+        //OBJECT ANIMATOR
+        objectAnimations++;
+        if (objectAnimations > 30) {
+            if (objectAnimator == 1){
+                objectAnimator = 2;
+            }
+            else if (objectAnimator == 2){
+                objectAnimator = 1;
+            }
+            objectAnimations = 0;
+        }
+        //CHAIR ANIMATOR
+        if (buttonAnimator == true) {
+            if (action == false){
+                if (objectAnimator == 1) {
+                    gp.obj[1] = new OBJ_ButtonIndicator_1();
+                    gp.obj[1].worldX = 31 * gp.tileSize;
+                    gp.obj[1].worldY = 36 * gp.tileSize;
+                    gp.obj[2] = null;
+                }
+                else if (objectAnimator == 2) {
+                    gp.obj[2] = new OBJ_ButtonIndicator_2();
+                    gp.obj[2].worldX = 31 * gp.tileSize;
+                    gp.obj[2].worldY = 36 * gp.tileSize;
+                    gp.obj[1] = null;
+                }
+            }
+        }
         //MOVEMENT
         if(keyH.upPressed == true || keyH.downPressed == true ||
                 keyH.leftPressed == true || keyH.rightPressed == true){
@@ -142,39 +168,15 @@ public class Player extends Entity{
     //PLAYER ACTIONS
     public void Actions(int i) {
         if(i != 999){
-            //ANIMATOR
-            objectAnimations++;
-            if (objectAnimations > 30) {
-                if (objectAnimator == 1){
-                    objectAnimator = 2;
-                }
-                else if (objectAnimator == 2){
-                    objectAnimator = 1;
-                }
-                objectAnimations = 0;
-            }
             System.out.println("test");
             String objectName = gp.obj[i].name;
 
             //FISHING
             switch(objectName) {
                 case "Chair":
-                    if (action == false){
-                        if (objectAnimator == 1) {
-                            gp.obj[1] = new OBJ_ButtonIndicator_1();
-                            gp.obj[1].worldX = 31 * gp.tileSize;
-                            gp.obj[1].worldY = 36 * gp.tileSize;
-                            gp.obj[2] = null;
-                        }
-                        else if (objectAnimator == 2) {
-                            gp.obj[2] = new OBJ_ButtonIndicator_2();
-                            gp.obj[2].worldX = 31 * gp.tileSize;
-                            gp.obj[2].worldY = 36 * gp.tileSize;
-                            gp.obj[1] = null;
-                        }
-                    }
+                    buttonAnimator = true;
                     // IF E IS PRESSED IT WILL DELETE THE BUTTONINDICATOR
-                    else if(action == true) {
+                    if(action == true) {
                         gp.obj[1] = null;
                         gp.obj[2] = null;
                         worldX = 31 * gp.tileSize;
@@ -183,12 +185,11 @@ public class Player extends Entity{
                     }
                     break;
             }
-
-
-            //TODO: MAKE IT SO HE SITS ON THE CHAIR AND AN ANIMATION PLAYS WHERE HE FISHES
             //TODO: GIVE FISH EVERY 10 SECONDS
         }
-        else if(i == 999) {
+        else if (i == 999){
+            //RESETS THE BUTTON ANIMATION
+            buttonAnimator = false;
             gp.obj[1] = null;
             gp.obj[2] = null;
         }
