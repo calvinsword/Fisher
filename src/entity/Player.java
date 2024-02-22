@@ -40,8 +40,8 @@ public class Player extends Entity{
     }
     public void setDefaultValues(){
         // Spawn point
-        worldX = gp.tileSize * 22;
-        worldY = gp.tileSize * 25;
+        worldX = gp.tileSize * 26;
+        worldY = gp.tileSize * 35;
         speed = 4;
         direction = "front";
     }
