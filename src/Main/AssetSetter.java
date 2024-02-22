@@ -16,5 +16,4 @@ public class AssetSetter {
         gp.obj[0].worldX = 31 * gp.tileSize;
         gp.obj[0].worldY = 37 * gp.tileSize;
     }
-
 }

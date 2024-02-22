@@ -14,6 +14,9 @@ public class Entity {
     public int spriteCounter = 0;
     public int spriteNumber = 1;
 
+    int objectAnimations = 0;
+    int objectAnimator = 1;
+
     public Rectangle solidArea;
     public int solidAreaDefualtX, solidAreaDefualtY;
     public boolean collisionOn = false;
