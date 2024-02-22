@@ -2,6 +2,7 @@ package Main;
 
 import Tile.TileManager;
 import entity.Player;
+import object.SuperObject;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -34,7 +35,9 @@ public class GamePanel extends JPanel implements Runnable{
 
     // ENTITY AND OBJECT
     public Player player = new Player(this,keyH);
-
+    public AssetSetter aSetter = new AssetSetter(this);
+    // SUPER OBJECT [10] MEANS THAT YOU CAN PLACE 10 OBJECTS IN THE SCREEN
+    public SuperObject obj[] = new SuperObject[10];
 
 
     // Set players default position
@@ -50,6 +53,11 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);
         playMusic(0);
+    }
+
+    public void setupGame() {
+
+        aSetter.setObject();
     }
 
     public void startGameThread() {
@@ -97,11 +105,16 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D)g;
-
+        //TILE
         tileM.draw(g2);
-
+        //OBJECT
+        for(int i = 0; i < obj.length; i++) {
+            if(obj[i] != null) {
+                obj[i].draw(g2, this);
+            }
+        }
+        //PLAYER
         player.draw(g2);
 
         g2.dispose();
